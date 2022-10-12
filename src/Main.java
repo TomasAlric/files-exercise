@@ -27,13 +27,13 @@ public class Main {
         fileService.write(groupFile, participantService.findAll());
 
         List<String> fileRead = fileService.readLines(groupFile);
-        fileRead.forEach(s -> {
+        fileRead.parallelStream().forEach(s -> {
             List<String> list = Arrays.asList(s.split(";"));
             participantService.saveParticipant(new Participant(list.get(0), list.get(1), LocalDateTime.parse(list.get(2), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
         });
 
         List<Participant> participants = participantService.getParticipants();
-        participants.forEach(participant -> {
+        participants.parallelStream().forEach(participant -> {
             LocalDateTime localDateTime = participant.getDate();
 
             int age = signService.getAge(localDateTime);
