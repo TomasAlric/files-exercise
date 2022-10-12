@@ -18,6 +18,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Long time = System.nanoTime();
+
         FileService fileService = new FileService();
         SignService signService = new SignService();
         ParticipantService participantService = new ParticipantService();
@@ -25,6 +27,8 @@ public class Main {
         Path groupFile = Path.of(USER_DIR, "files", "azerbaijao.txt");
 
         fileService.write(groupFile, participantService.findAll());
+
+
 
         List<String> fileRead = fileService.readLines(groupFile);
         fileRead.parallelStream().forEach(s -> {
@@ -55,6 +59,8 @@ public class Main {
 
             fileService.write(participantFile, info);
         });
+
+        System.out.println("Thread time: " + time);
 
     }
 }
